@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ════════════════════════════════════════════════════════════════════════
+    // TechGuide — Reglas de seguridad de Firestore
+    //
+    // ⚠️ CONTEXTO QUE DEBES CONOCER (define qué pueden y qué NO pueden estas reglas):
+    // La app NO usa Firebase Authentication. El login lee /empleados/{ATTUID} y
+    // compara la contraseña en el navegador. Por eso request.auth SIEMPRE es null
+    // y las reglas NO pueden saber QUIÉN hace la petición (admin vs. cualquiera).
+    //
+    // LO QUE ESTAS REGLAS SÍ LOGRAN:
+    //   • Solo existen las colecciones que la app usa. Cualquier otra ruta se niega.
+    //   • /empleados: se puede LEER (lo necesitan el login y los dashboards), pero
+    //     ESCRIBIR queda muy acotado: SOLO se puede alternar el booleano "activo"
+    //     (dar de baja / reactivar). NO se puede crear, borrar, ni cambiar
+    //     contraseñas / roles / nombres / tiendas desde el cliente.
+    //   • Nadie puede volcar en bloque las cotizaciones ni los resúmenes (no "list").
+    //
+    // LO QUE NO SE PUEDE SIN Firebase Auth o Cloud Functions (queda pendiente):
+    //   • Ocultar las contraseñas: el login necesita LEER el doc del empleado, así
+    //     que quien tenga la config pública puede leer /empleados y ver contraseñas.
+    //     → Solo se arregla moviendo el login a Cloud Functions o usando Firebase Auth.
+    //   • Impedir que un tercero técnico (vía API directa) alterne flags "activo".
+    // ════════════════════════════════════════════════════════════════════════
+
+    // ── /empleados/{attuid} — PADRÓN Y CONTROL DE ACCESO ─────────────────────
+    match /empleados/{attuid} {
+      // LECTURA: necesaria para el login (get por ATTUID) y para los dashboards
+      // de regional/director (list filtrando por rol/region). Sin Auth no se
+      // puede restringir más sin romper esas funciones.
+      allow get, list: if true;
+
+      // ESCRITURA: SOLO se permite alternar el booleano "activo" en un documento
+      // que ya existe (= dar de baja o reactivar el acceso). Cualquier intento de
+      // tocar otro campo (password, rol, nombre, tienda…) se rechaza.
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['activo'])
+                    && request.resource.data.activo is bool;
+
+      // Crear o borrar empleados desde el cliente NO se permite. Las altas se
+      // hacen en la consola de Firebase (o, a futuro, vía Cloud Function admin).
+      // Para revocar acceso usa "activo:false" (reversible y conserva historial).
+      allow create, delete: if false;
+    }
+
+    // ── /cotizaciones/{id} — REGISTRO DE COTIZACIONES ────────────────────────
+    // La app registra cada cotización desde el cliente y puede leer/ajustar la
+    // propia (flujo de deshacer). Sin Auth no hay forma de atar al autor.
+    // Se NIEGA "list": la app nunca lista esta colección (los dashboards leen
+    // /resumenes), así que nadie puede volcar todas las cotizaciones de golpe.
+    match /cotizaciones/{id} {
+      allow get, create, update, delete: if true;
+      allow list: if false;
+    }
+
+    // ── /resumenes/{fecha} — CONTADORES AGREGADOS POR DÍA ────────────────────
+    // Doc por día (YYYY-MM-DD) con contadores que alimentan los dashboards. La
+    // app los lee por fecha y los actualiza con transacciones de incremento.
+    // Se NIEGA "list" (la app accede por fecha puntual, no enumera la colección).
+    match /resumenes/{fecha} {
+      allow get, write: if true;
+      allow list: if false;
+    }
+
+    // ── /clientes/{id} — CRM "Mis clientes" ──────────────────────────────────
+    // CRM escrito desde el cliente. Sin Auth no se puede restringir por dueño.
+    // (Si el CRM llegara a guardar clientes en una subcolección en vez de una
+    //  colección de nivel superior, habría que ajustar esta ruta.)
+    match /clientes/{id} {
+      allow read, write: if true;
+    }
+
+    // ── Cualquier otra ruta: DENEGADA ────────────────────────────────────────
+    // (Esto solo afecta rutas NO listadas arriba; las reglas específicas mandan.)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
