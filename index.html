@@ -154,22 +154,31 @@
 .hv2-cta-sub{color:var(--hv2-ink2);font-size:12px;margin-top:1px}
 .hv2-cta-arrow{color:var(--hv2-accent);font-size:21px;flex-shrink:0}
 
-     .home-top-row{
-  display:flex !important;
-  gap:12px;
-  align-items:stretch;
+.home-top-row{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:10px !important;
   margin-top:18px;
 }
 
-.home-top-row > .hv2-pulse{
-  flex:1 1 50%;
-  margin-top:0 !important;
+.home-top-row .hv2-pulse{
+  width:100% !important;
+  margin:0 !important;
+  padding:10px 2px !important;
 }
 
-.home-top-row > .hv2-cta{
-  flex:1 1 50%;
-  width:auto !important;
-  margin-top:0 !important;
+.home-top-row .hv2-cta{
+  width:100% !important;
+  margin:0 !important;
+  padding:12px !important;
+}
+
+.home-top-row .hv2-cta-title{
+  font-size:14px !important;
+}
+
+.home-top-row .hv2-cta-sub{
+  font-size:10px !important;
 }
 
 /* Hoja selectora de plataforma */
