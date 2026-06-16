@@ -18,8 +18,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="TechGuide">
 <meta name="theme-color" content="#00A8E0">
-<meta name="description" content="TechGuide Prime MX — Fichas técnicas para fuerza de ventas">
-<title>TechGuide · Prime MX · v1.3</title>
+<meta name="description" content="SIIVE — Fichas técnicas para fuerza de ventas">
+<title>SIIVE · v1.1</title>
 <link rel="manifest" href="manifest.json">
 <!-- Apple touch icons -->
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -4582,7 +4582,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;co
 
     <!-- TOPBAR -->
     <div class="hv2-topbar hv2-rise" style="--d:0s">
-      <div class="hv2-brand">PRIME<span>MX</span></div>
+      <div class="hv2-brand">SIIVE<span>1.1</span></div>
       <div class="hv2-topbar-right">
         <button class="refresh-chip" id="refresh-chip" onclick="hardRefresh()" title="Actualizar app">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
@@ -4689,8 +4689,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;co
 
     <!-- [v1.10.47] CIERRE DEL HOME -->
     <div class="hv2-footer hv2-rise" style="--d:0.84s">
-      <div class="hv2-footer-brand">PRIME<span>MX</span></div>
-      <div class="hv2-footer-meta">TechGuide · <span id="hv2-footer-ver">v1.10.47</span></div>
+      <div class="hv2-footer-brand">SIIVE<span>1.1</span></div>
+      <div class="hv2-footer-meta">ARMA MX<span id="hv2-footer-ver">v1.10.47</span></div>
     </div>
 
   </div>
@@ -6574,7 +6574,7 @@ function cotSend(){
     msg += '_*Equipo sin costo sujeto a permanencia del plazo contratado. Cancelación anticipada genera cobro del equipo._\n\n';
   }
   // [v1.10.67] Cierre en negritas (antes iba en cursiva).
-  msg += '*Cotización generada por Prime MX*';
+  msg += '*Cotización generada por SIIVE*';
   
   // [v1.10.36 FIX HONOR/HUAWEI] El bug de contadores por texto es exclusivo de
   // teléfonos Honor/Huawei: su capa MagicOS/EMUI CONGELA la app apenas pasa a
@@ -6652,7 +6652,7 @@ async function enviarCotizacionTexto(msg, cotizacionId, hasCRM){
   if(navigator.share){
     try{
       await navigator.share({
-        title: 'Cotización Prime MX',
+        title: 'Cotización SIIVE',
         text: msg
       });
       // Share exitoso: la cotización ya está encolada/persistiéndose
@@ -7190,7 +7190,7 @@ function buildSpecsPDFHTML(dev){
     '<div style="margin-top:8px;padding:24px 42px 28px;background:#F5F5F7;border-top:1px solid #ECECEC">'+
       (asesorBlock || '')+
       '<div style="font-size:10px;color:#86868B;line-height:1.5;padding-top:14px;border-top:1px solid #ECECEC;margin-top:14px;display:flex;justify-content:space-between;gap:20px">'+
-        '<div><strong style="color:#1D1D1F;font-weight:600">Prime MX</strong> · Ficha generada el '+dateStr+'</div>'+
+        '<div><strong style="color:#1D1D1F;font-weight:600">SIIVE</strong> · Ficha generada el '+dateStr+'</div>'+
         '<div>Especificaciones sujetas a cambio sin previo aviso</div>'+
       '</div>'+
     '</div>'+
@@ -7303,7 +7303,7 @@ async function generateSpecsPDF(){
         await navigator.share({
           files: [file],
           title: dev.brand + ' ' + dev.name,
-          text: 'Ficha técnica · Prime MX'
+          text: 'Ficha técnica · SIIVE'
         });
         if(btn){btn.innerHTML = originalHTML; btn.disabled = false;}
         return;
@@ -10546,7 +10546,7 @@ function generarMensajeAsesor(c, ultCotiz){
   else saludo = '¡Hola ' + primerNombre + '! ¿Cómo has estado?';
   
   let msg = saludo + '\n\n';
-  msg += 'Soy ' + nombreAsesor + ', de *Prime MX*';
+  msg += 'Soy ' + nombreAsesor + ', de *AT&T*';
   const tienda = asesorData.tienda || asesorData.sucursal || '';
   if(tienda) msg += ' (' + tienda.replace(/_/g,' ') + ')';
   msg += '. ';
@@ -11919,7 +11919,7 @@ async function exportarDashboardExcel(){
     
     // ─── HOJA 1: RESUMEN ───────────────────────────────────────────────
     const ws1Data = [
-      ['TechGuide Prime MX — Reporte Dashboard'],
+      ['TechGuide SIIVE — Reporte Dashboard'],
       [],
       ['Exportado por:', (perfil.nombre||'') + ' (' + (perfil.attuid||'') + ')'],
       ['Rol:', rol.toUpperCase()],
@@ -13852,9 +13852,9 @@ function aiFindDevice(id){
 function aiSystemPrompt(){
   const asesor = asesorData ? (asesorData.name + ' (' + asesorData.attuid + ')') : 'asesor';
   const _region = (asesorData && asesorData.region) ? asesorData.region : '';
-  return 'Eres el Asistente de TechGuide, una PWA de Prime MX (distribuidor maestro de AT&T México). Estás hablando con ' + asesor + (_region ? ', regional ' + _region : '') + '.\n\n'
+  return 'Eres el Asistente de AT&T. Estás hablando con ' + asesor + (_region ? ', regional ' + _region : '') + '.\n\n'
     + 'CONTEXTO DE NEGOCIO:\n'
-    + '• Prime MX es distribuidor AT&T México. Vende equipos con plan pospago en planes Azul 1/2/3, Plata, Oro, Black, Platino, Diamante, Titanio.\n'
+    + '• AT&T México. Vende equipos con plan pospago en planes Azul 1/2/3, Plata, Oro, Black, Platino, Diamante, Titanio.\n'
     + '• "Incluido en el plan" significa equipo sin costo SUJETO a permanencia del plazo. Cancelación anticipada genera cobro del equipo.\n'
     + '• Plazos disponibles: 24, 30 o 36 meses.\n'
     + '• Portabilidad: 20% descuento en renta x 12 meses (10% en Titanio).\n\n'
@@ -13882,7 +13882,7 @@ function aiSystemPrompt(){
     + '6. Comisiones: puedes mencionarlas si el asesor pregunta directamente y tienes el dato. Para detalles, recomiendar revisar "Top Comisión" en la app.\n'
     + '7. Mensajes cortos y prácticos. **Negritas** sólo para resaltar nombres de equipos, precios y nombres de funcionalidades clave. Bullets sólo si listas >3 cosas.\n'
     + '8. Responde en español MX, tono profesional pero cercano. Trata al asesor de "tú".\n'
-    + '9. Si te preguntan algo NO relacionado a Prime MX/TechGuide/telefonía/ventas, redirige amablemente al tema.\n\n'
+    + '9. Si te preguntan algo NO relacionado a telefonía/ventas, redirige amablemente al tema.\n\n'
     + 'IMPORTANTE: confía en el contexto fresco — son los datos REALES de hoy. Si tu memoria entrenada dice algo distinto, prevalece el contexto. Si el contexto trae `app_capacidades` o `accesorios`, esos son hechos verificados, NO los contradigas.';
 }
 
@@ -14929,7 +14929,7 @@ function buildFlyerHTML(state){
     }
     h+='</div></div>';
   }
-  h+='<div class="flyer-v3-disc">* Pago inicial sujeto a aprobación crediticia · Cotización generada por Prime MX · Precios sujetos a cambio sin previo aviso</div>';
+  h+='<div class="flyer-v3-disc">* Pago inicial sujeto a aprobación crediticia · Cotización generada por SIIVE · Precios sujetos a cambio sin previo aviso</div>';
   h+='</div>';
   
   h+='</div>';
@@ -15027,7 +15027,7 @@ function closeFlyerPreview(){
 async function shareFlyerImage(){
   if(!lastGeneratedBlob){alert('Imagen no lista');return;}
   
-  const fileName = 'cotizacion-primemx-' + Date.now() + '.png';
+  const fileName = 'cotizacion-SIIVE-' + Date.now() + '.png';
   const file = new File([lastGeneratedBlob], fileName, {type: 'image/png'});
   
   // [v1.10.12 BUG FIX] Armar listener visibilitychange ANTES de navigator.share
@@ -15057,7 +15057,7 @@ async function shareFlyerImage(){
     try{
       await navigator.share({
         files: [file],
-        title: 'Cotización Prime MX',
+        title: 'Cotización SIIVE',
         text: 'Cotización para ' + (cotState.device.name || 'tu equipo')
       });
       // Share exitoso → la cotización ya está encolada/persistiéndose, todo bien
