@@ -11502,7 +11502,7 @@ function updateDashHomeCard(){
   // cabe en la tarjeta compacta. El detalle por rol se ve dentro del dashboard.
   const setT=function(v){ if(t) t.textContent=v; };
   const setS=function(v){ if(s) s.textContent=v; };
-  setT('Actividad');
+  setT('ACTIVIDAD');
   if(rol==='regional' || rol==='director' || rol==='director_nacional'){
     setS(rol==='director_nacional'?'Cotizaciones del país':(rol==='director'?'Cotizaciones de tu región':'Cotizaciones de tus tiendas'));
   } else if(rol==='gerente'){
@@ -11653,7 +11653,7 @@ function abrirDashboardConSesionActual(){
     dashState.tiendasAsignadasFiltro = miTienda ? [miTienda] : [];
   } else {
     // Asesor: mini-dashboard personal
-    title.textContent='Mi actividad';
+    title.textContent='MI ACTIVIDAD';
     regionRow.style.display='none';
     dashState.tiendasAsignadasFiltro = null;
   }
