@@ -7182,7 +7182,7 @@ function buildSpecsPDFHTML(dev){
     // ── Header: marca + fecha ────────────────────────────────────────────
     '<div style="display:flex;align-items:center;justify-content:space-between;padding:30px 42px 22px;border-bottom:1px solid #ECECEC">'+
       '<div style="display:flex;align-items:baseline;gap:0">'+
-        '<span style="font-size:26px;font-weight:700;color:#1D1D1F;letter-spacing:-0.02em"></span>'+
+        '<span style="font-size:26px;font-weight:700;color:#1D1D1F;letter-spacing:-0.02em">AT&T</span>'+
         '<span style="font-size:26px;font-weight:300;color:#0066CC;margin:0 2px"></span>'+
         '<span style="font-size:26px;font-weight:700;color:#1D1D1F;letter-spacing:-0.02em"></span>'+
         '<span style="font-size:14px;font-weight:500;color:#86868B;margin-left:4px;letter-spacing:0.08em"></span>'+
@@ -7212,7 +7212,7 @@ function buildSpecsPDFHTML(dev){
     '<div style="margin-top:8px;padding:24px 42px 28px;background:#F5F5F7;border-top:1px solid #ECECEC">'+
       (asesorBlock || '')+
       '<div style="font-size:10px;color:#86868B;line-height:1.5;padding-top:14px;border-top:1px solid #ECECEC;margin-top:14px;display:flex;justify-content:space-between;gap:20px">'+
-        '<div><strong style="color:#1D1D1F;font-weight:600">SIIVE</strong> · Ficha generada el '+dateStr+'</div>'+
+        '<div><strong style="color:#1D1D1F;font-weight:600">AT&T</strong> · Ficha generada el '+dateStr+'</div>'+
         '<div>Especificaciones sujetas a cambio sin previo aviso</div>'+
       '</div>'+
     '</div>'+
@@ -7325,7 +7325,7 @@ async function generateSpecsPDF(){
         await navigator.share({
           files: [file],
           title: dev.brand + ' ' + dev.name,
-          text: 'Ficha técnica · SIIVE'
+          text: 'Ficha técnica · '
         });
         if(btn){btn.innerHTML = originalHTML; btn.disabled = false;}
         return;
